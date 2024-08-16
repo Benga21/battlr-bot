@@ -1,25 +1,54 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import BotCollection from './components/BotCollection';
+import YourBotArmy from './components/YourBotArmy';
+import { fetchBots, deleteBot } from './services/api';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [myArmy, setMyArmy] = useState([]);
+  const [availableBots, setAvailableBots] = useState([]);
+
+  useEffect(() => {
+    const getBots = async () => {
+      try {
+        const data = await fetchBots();
+        setAvailableBots(data);
+      } catch (error) {
+        console.error('Error fetching bots:', error);
+      }
+    };
+
+    getBots();
+  }, []);
+
+  const handleEnlist = (bot) => {
+    if (!myArmy.find(b => b.id === bot.id)) {
+      setMyArmy([...myArmy, bot]);
+    }
+  };
+
+  const handleRelease = (bot) => {
+    setMyArmy(myArmy.filter(b => b.id !== bot.id));
+  };
+
+  const handleDischarge = async (bot) => {
+    try {
+      await deleteBot(bot.id);
+      setMyArmy(myArmy.filter(b => b.id !== bot.id));
+    } catch (error) {
+      console.error('Error discharging bot:', error);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Bot Battlr</h1>
+      <BotCollection bots={availableBots} onEnlist={handleEnlist} />
+      <YourBotArmy bots={myArmy} onRelease={handleRelease} onDischarge={handleDischarge} />
     </div>
   );
-}
+};
 
 export default App;
+
+      
