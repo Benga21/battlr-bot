@@ -12,3 +12,6 @@ Viewing Bots: Visit the homepage to see all available bots.
 Enlisting Bots: Click the "Enlist" button on a bot to add it to your army.
 Releasing Bots: Click a bot in your army to release it.
 Discharging Bots
+Run npm start to run the application
+start db.json at port json-server --watch db.json --port 8001
+

@@ -1,7 +1,6 @@
 export function createBotCard(bot, onEnlist) {
-  // Create card element
   const card = document.createElement('div');
-  card.className = 'bot-card'; 
+  card.className = 'bot-card';
   const name = document.createElement('h3');
   name.textContent = bot.name;
   card.appendChild(name);
@@ -10,12 +9,13 @@ export function createBotCard(bot, onEnlist) {
   img.alt = bot.name;
   card.appendChild(img);
   const health = document.createElement('p');
-  health.textContent = `Health: ${bot.health}`;
+  health.textContent = 'Health: ' + bot.health;
   card.appendChild(health);
   const button = document.createElement('button');
   button.textContent = 'Enlist';
-  button.onclick = () => onEnlist(bot);
+  button.onclick = function() {
+    onEnlist(bot);
+  };
   card.appendChild(button);
-
   return card;
 }

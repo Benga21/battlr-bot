@@ -1,13 +1,11 @@
 import React from 'react';
 import BotCollection from './BotCollection';
-
-function BotsPage(props) {
+function BotsPage({ bots, onEnlist }) {
   return (
     <div>
       <h2>Available Bots</h2>
-      <BotCollection bots={props.bots} onEnlist={props.onEnlist} />
+      <BotCollection bots={bots} onEnlist={onEnlist} />
     </div>
   );
 }
-
 export default BotsPage;
